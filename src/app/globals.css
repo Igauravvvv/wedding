@@ -1,26 +1,258 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFFFF0; /* Ivory */
+  --foreground: #800000; /* Deep Maroon */
 }
 
 @theme inline {
+  --color-ivory: #FFFFF0;
+  --color-maroon: #800000;
+  --color-gold: #D4AF37;
+  --color-sage: #9DC183;
+  --color-blush: #FFB6C1;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-montserrat);
+  --font-calligraphy: var(--font-great-vibes);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+.regional-journey { display: grid; grid-template-columns: 1fr 1.12fr 1fr; gap: clamp(8px, 2vw, 28px); align-items: center; position: relative; }
+.regional-card { position: relative; z-index: 1; min-width: 0; text-align: center; padding: 20px 12px 28px; background: #fffcf1; border: 1px solid #d4af3740; border-radius: 150px 150px 12px 12px; }
+.regional-card--delhi { background: #f8ecd6; border-color: #b89047; box-shadow: 0 14px 40px #9b682312; }
+.regional-art { width: 100%; height: auto; margin: 0 auto 18px; }
+.regional-caption { font-family: var(--font-playfair), serif; font-style: italic; color: #956d50; font-size: 14px; margin-top: 14px; line-height: 1.6; }
+.regional-food { margin-top: 20px; padding-top: 12px; border-top: 1px solid #d4af3733; }
+.regional-food svg { width: 100%; max-width: 200px; margin: 0 auto; }
+.regional-food-label { display: block; min-height: 40px; padding: 0 4px; font-family: var(--font-playfair), serif; font-size: 14px; line-height: 1.5; color: #884e32; }
+@media (max-width: 640px) {
+  .regional-food { margin-top: 12px; padding-top: 6px; }
+  .regional-food-label { font-size: 11px; min-height: 50px; }
+  .regional-card { padding: 12px 4px 18px; }
+  .regional-card h3 { font-size: 22px; }
+  .regional-card > p:not(.regional-caption) { font-size: 9px; letter-spacing: .04em; min-height: 27px; }
+  .regional-caption { font-size: 11px; padding-inline: 3px; }
+  .regional-art { margin-bottom: 12px; }
+}
+
+/* Custom Scrollbar for Elegance */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-maroon);
+}
+
+/* Soft, layered mist: only transforms animate, keeping the blur static. */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.smoke {
+  position: absolute;
+  width: 95%;
+  height: 68%;
+  border-radius: 45%;
+  filter: blur(35px);
+  transform-origin: center;
+  animation: mist-drift 24s ease-in-out infinite alternate;
+  background:
+    radial-gradient(ellipse at 20% 60%, var(--mist) 0%, transparent 48%),
+    radial-gradient(ellipse at 55% 35%, var(--mist) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 70%, var(--mist) 0%, transparent 48%);
+}
+
+.smoke--rose {
+  --mist: rgb(227 155 168 / 40%);
+  left: -35%;
+  bottom: -12%;
+}
+
+.smoke--gold {
+  --mist: rgb(215 181 106 / 32%);
+  right: -32%;
+  top: -8%;
+  animation-duration: 30s;
+  animation-delay: -12s;
+  animation-direction: alternate-reverse;
+}
+
+.smoke--ivory {
+  --mist: rgb(255 255 255 / 88%);
+  width: 130%;
+  height: 45%;
+  left: -20%;
+  bottom: -18%;
+  animation-duration: 20s;
+  animation-delay: -8s;
+}
+
+.atmosphere--subtle { opacity: 0.22; }
+
+.floating-petal {
+  position: absolute;
+  top: -8%;
+  width: var(--size);
+  height: calc(var(--size) * 1.5);
+  border-radius: 75% 10% 70% 25%;
+  background: linear-gradient(135deg, #f5d6cb, #cf919b99);
+  animation: petal-fall var(--duration) linear var(--delay) infinite;
+  opacity: 0;
+}
+
+.floating-petal:nth-child(3n) {
+  background: linear-gradient(135deg, #ecd89f, #d4af3755);
+}
+
+.hero-arch { animation: arch-breathe 9s ease-in-out infinite alternate; }
+
+.wedding-hero {
+  background: radial-gradient(ellipse at 50% 40%, #fffff4 20%, #f8e9cf 75%, #eac9a3);
+}
+
+.cloud-bank {
+  position: absolute;
+  width: max(75vw, 700px);
+  height: 48%;
+  background: url('/cloud-bank.svg') center / 100% 100% no-repeat;
+  animation: cloud-arrival 26s ease-in-out infinite alternate;
+  opacity: .95;
+}
+.cloud-bank--left { left: -30%; bottom: -6%; }
+.cloud-bank--right {
+  right: -32%; bottom: 5%;
+  animation-name: cloud-arrival-right;
+  animation-duration: 32s;
+  animation-delay: -9s;
+}
+.cloud-bank--front {
+  width: 115%; height: 38%; left: -8%; bottom: -16%;
+  animation-duration: 21s; animation-delay: -14s;
+}
+.wedding-ornaments { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.wedding-toran { position: absolute; top: 60px; width: 100%; height: 180px; opacity: .85; }
+.wedding-mandala { position: absolute; width: 370px; height: 370px; color: #b57c29; opacity: .2; top: 36%; animation: mandala-turn 100s linear infinite; }
+.wedding-mandala--left { left: -220px; }
+.wedding-mandala--right { right: -220px; animation-direction: reverse; }
+.wedding-border { position: absolute; top: 80px; bottom: 0; width: 9px; opacity: .45; border-inline: 1px solid #bc8c37; background: repeating-linear-gradient(45deg, transparent 0 8px, #d1a252 8px 10px, transparent 10px 18px); }
+.wedding-border--left { left: 20px; }
+.wedding-border--right { right: 20px; }
+.wedding-blessing { color: #a76a24; font-family: serif; font-size: 22px; letter-spacing: .15em; margin-top: 60px; }
+@keyframes cloud-arrival {
+  from { transform: translate3d(-12%, 6%, 0) scale(1); }
+  to { transform: translate3d(24%, -8%, 0) scale(1.12); }
+}
+@keyframes cloud-arrival-right {
+  from { transform: translate3d(15%, 0, 0) scaleX(-1); }
+  to { transform: translate3d(-26%, 9%, 0) scaleX(-1.1); }
+}
+@keyframes mandala-turn { to { transform: rotate(360deg); } }
+
+@keyframes mist-drift {
+  from { transform: translate3d(-5%, 8%, 0) rotate(-8deg) scale(1); }
+  to { transform: translate3d(16%, -12%, 0) rotate(12deg) scale(1.18); }
+}
+
+@keyframes petal-fall {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  12%, 78% { opacity: 0.55; }
+  100% { transform: translate3d(var(--drift), 115svh, 0) rotate(320deg); opacity: 0; }
+}
+
+@keyframes arch-breathe {
+  from { transform: translateY(0) scale(1); opacity: 0.7; }
+  to { transform: translateY(-8px) scale(1.015); opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .wedding-toran { width: 900px; max-width: none; left: 50%; transform: translateX(-50%); height: 145px; }
+  .wedding-border--left { left: 9px; }
+  .wedding-border--right { right: 9px; }
+  .cloud-bank { width: 620px; height: 35%; }
+  .cloud-bank--left { left: -420px; }
+  .cloud-bank--right { right: -430px; }
+  .cloud-bank--front { left: -100px; bottom: -15%; }
+  .wedding-blessing { margin-top: 90px; font-size: 18px; }
+  .smoke { filter: blur(24px); width: 120%; }
+  .floating-petal:nth-child(even) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smoke, .floating-petal, .hero-arch, .cloud-bank, .wedding-mandala { animation: none; }
+  .floating-petal { display: none; }
+}
+
+/* Real photographs retain their original framing in keepsake prints. */
+.memory-columns { columns: 3; column-gap: 28px; padding: 12px; }
+.memory-print { break-inside: avoid; margin: 0 0 32px; padding: 12px; background: #fffdf8; border: 1px solid #d4af3730; box-shadow: 0 8px 26px #59322217; }
+.memory-print a { overflow: hidden; }
+.memory-print img { transition: transform .4s ease; }
+.memory-print a:hover img { transform: scale(1.025); }
+.couple-mascot { width: clamp(180px, 24vw, 290px); height: 250px; object-fit: contain; margin: 4px auto 0; }
+@media (max-width: 1023px) { .memory-columns { columns: 2; } }
+@media (max-width: 639px) { .memory-columns { columns: 1; max-width: 420px; margin: auto; } .couple-mascot { height: 210px; } }
+@media (prefers-reduced-motion: reduce) { .memory-print img { transition: none; } }
+.couple-mascot { width: 200px; height: 300px; border-radius: 110px 110px 12px 12px; border: 1px solid #d4af3755; box-shadow: 0 10px 35px #80000018; }
+@media (max-width: 639px) { .couple-mascot { width: 166px; height: 250px; } .hero-personalized { padding-bottom: 55px; } }
+
+/* A larger stage lets the two portraits enter independently and become one. */
+.wedding-hero--entrance { min-height: 100svh; padding: 150px 0 150px; }
+.wedding-hero--entrance .wedding-blessing { margin-top: 0; }
+.wedding-hero--entrance .hero-personalized { width: 100%; padding-bottom: 0; }
+.couple-entrance { width: 100%; margin-top: 8px; }
+.couple-stage { width: min(560px, 100%); height: 480px; position: relative; margin: auto; }
+.couple-stage-layers { position: absolute; inset: 0; }
+.couple-solo { position: absolute; top: 0; height: 100%; width: 58%; }
+.couple-solo--lalit { left: 0; }
+.couple-solo--shivani { right: 0; }
+.couple-together { position: absolute; inset: 0; width: 360px; max-width: 100%; margin: auto; }
+.couple-replay { margin-top: 12px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #80000099; cursor: pointer; padding: 8px 12px; border-bottom: 1px solid #d4af3770; }
+.couple-replay:hover { color: #800000; }
+.couple-replay:focus-visible { outline: 2px solid #800000; outline-offset: 4px; }
+.couple-replay:disabled { visibility: hidden; }
+@media (max-width: 639px) {
+  .wedding-hero--entrance { padding-top: 170px; padding-bottom: 145px; }
+  .couple-stage { height: 390px; max-width: 350px; }
+  .couple-together { width: 280px; }
+}
+
+.couple-figure { position: absolute; inset: 0; transform-origin: 50% 95%; }
+.meeting-halo { position: absolute; inset: 4% 8% -2%; border-radius: 50% 50% 42% 42%; background: radial-gradient(ellipse, #fff8dc99 0%, #f1cc8738 48%, transparent 72%); pointer-events: none; }
+.meeting-trails { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.meeting-petal { position: absolute; width: 11px; height: 17px; border-radius: 80% 0 80% 20%; background: #b85367; z-index: 3; pointer-events: none; }
+.meeting-petal--1 { width: 8px; height: 12px; background: #d8af57; }
+.meeting-petal--2 { width: 10px; height: 15px; background: #eaa0ac; }
+.meeting-sparkle { position: absolute; color: #b58a31; z-index: 3; pointer-events: none; }
+.meeting-heart { position: absolute; left: 48%; top: 30%; z-index: 4; color: #a63750; pointer-events: none; }
+@media (max-width: 639px) { .meeting-petal { width: 8px; height: 12px; } }
+
+.entrance-family { position: absolute; width: min(30vw, 480px); top: 20%; text-align: center; z-index: 2; }
+.entrance-family--lalit { left: calc(50% - 50vw - 25px); rotate: 12deg; transform-origin: left bottom; }
+.entrance-family--shivani { right: calc(50% - 50vw - 25px); rotate: -12deg; transform-origin: right bottom; }
+.entrance-family-image { width: 100%; height: auto; object-fit: contain; mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%); }
+.entrance-family > p { display: none; }
+@media (max-width: 767px) {
+  .couple-stage--family { margin-bottom: 145px; }
+  .entrance-family { top: 87%; width: 48vw; max-width: 300px; }
+  .entrance-family--lalit { left: calc(50% - 50vw - 10px); rotate: 10deg; }
+  .entrance-family--shivani { right: calc(50% - 50vw - 10px); rotate: -10deg; }
 }
